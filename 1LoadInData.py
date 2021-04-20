@@ -44,6 +44,28 @@ print(home_team_required + ' vs ' + away_team_required + ' has id:' + str(match_
         
 #Exercise: 
 #1, Edit the code above to print out the result list for the Mens World cup 
-#2, Edit the code above to find the ID for England vs. Sweden
-#3, Write new code to write out a list of just Sweden's results in the tournament.
+world_cup_id = 43
+with open(f'Statsbomb/data/matches/{world_cup_id}/3.json') as f:
+    world_cup_matches = json.load(f)
 
+
+results = []
+for match in world_cup_matches:
+    home, away = match['home_team']['home_team_name'], match['away_team']['away_team_name']
+    home_score, away_score = match['home_score'], match['away_score']
+    results.append(f'{home} {home_score} - {away} {away_score}')
+# print(results)
+
+#2, Edit the code above to find the ID for England vs. Sweden
+# should be a list of 1: 
+match_id = [match['match_id'] for match in world_cup_matches if 
+match['home_team']['home_team_name'] in {'England', 'Sweden'} and 
+match['away_team']['away_team_name'] in {'England', 'Sweden'}]
+
+#3, Write new code to write out a list of just Sweden's results in the tournament.
+sweden_results = []
+for match in world_cup_matches:
+    home, away = match['home_team']['home_team_name'], match['away_team']['away_team_name']
+    if home == 'Sweden' or away == 'Sweden':
+        home_score, away_score = match['home_score'], match['away_score']
+        sweden_results.append(f'{home} {home_score} - {away} {away_score}')

@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#ignore datasets
+Statsbomb/
+
+
 # C extensions
 *.so
 
