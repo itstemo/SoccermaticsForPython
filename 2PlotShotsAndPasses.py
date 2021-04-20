@@ -45,7 +45,7 @@ for i,shot in shots.iterrows():
     team_name=shot['team_name']
     
     circleSize=2
-    #circleSize=np.sqrt(shot['shot_statsbomb_xg'])*12
+    circleSize=np.sqrt(shot['shot_statsbomb_xg'])*12
 
     if (team_name==home_team_required):
         if goal:
@@ -73,7 +73,21 @@ plt.show()
 
 #Exercise: 
 #1, Create a dataframe of passes which contains all the passes in the match
+passes = df.loc[df['type_name'] == 'Pass'].set_index('id')
+sweden_passes = passes.query(f'team_name == "{away_team_required}"')
+seger_passes = sweden_passes.query(f'player_name == "Sara Caroline Seger"')
 #2, Plot the start point of every Sweden pass. Attacking left to right.
+(fig,ax) = createPitch(pitchLengthX,pitchWidthY,'yards','gray')
+for _, pase in seger_passes.iterrows():
+    # pase since pass is restricted :grim
+    x,y = pase['location']
+    end_x, end_y = pase["pass_end_location"]
+    sweden_pass = plt.Arrow(x,pitchWidthY-y,end_x-x, end_y-y, width=2)
+    ax.add_patch(sweden_pass)
+    fig.set_size_inches(10, 7)
+fig.savefig('Output/passes.png', dpi=100) 
+plt.show()
+
 #3, Plot only passes made by Caroline Seger (she is Sara Caroline Seger in the database)
-#4, Plot arrows to show where the passes we
+#4, Plot arrows to show where the passes wents 
 
